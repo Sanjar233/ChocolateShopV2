@@ -1,4 +1,4 @@
-package com.example.testProject.exception;
+package com.example.ChocolateShopV2.exception;
 
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
