@@ -3,12 +3,12 @@ package com.example.ChocolateShopV2.service.impl;
 import com.example.ChocolateShopV2.dto.purveyor.PurveyorAddRequest;
 import com.example.ChocolateShopV2.entities.Purveyor;
 import com.example.ChocolateShopV2.repositories.PurveyorRepository;
-import com.example.ChocolateShopV2.service.ManagementService;
+import com.example.ChocolateShopV2.service.PurveyorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
-public class ManagementServiceImpl implements ManagementService {
+public class PurveyorServiceImpl implements PurveyorService {
     private final PurveyorRepository purveyorRepository;
 
     @Override
