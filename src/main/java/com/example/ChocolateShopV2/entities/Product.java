@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,10 +18,13 @@ import lombok.Setter;
 @Table(name = "product_table")
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     @Enumerated(EnumType.STRING)
     private ProductType type;
     private int price;
-    private int quantity;}
+    private int quantity;
+    @ManyToMany
+    Set<Purveyor>purveyors;
+}
