@@ -19,10 +19,7 @@ import org.springframework.http.ResponseEntity;
 public class AuthController {
 
     private final AuthService authService;
-    @PostMapping("/register")
-    public ResponseEntity<UserRegisterResponse> register(@RequestBody UserRegisterRequest request){
-        return ResponseEntity.ok(authService.register(request));
-    }
+
     @PostMapping("/login")
     public ResponseEntity<AuthLoginResponse> login(@RequestBody AuthLoginRequest request){
         return ResponseEntity.ok(authService.login(request));

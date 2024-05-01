@@ -9,7 +9,6 @@ import com.example.ChocolateShopV2.dto.user.UserRegisterResponse;
 
 
 public interface AuthService {
-    UserRegisterResponse register(UserRegisterRequest userRegisterRequest);
 
     AuthLoginResponse login(AuthLoginRequest authLoginRequest);
 }
