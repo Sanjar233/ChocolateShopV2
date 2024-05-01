@@ -21,22 +21,8 @@ public class AuthServiceImpl implements AuthService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
-    private final PasswordEncoder encoder;
 
-    @Override
-    public UserRegisterResponse register(UserRegisterRequest request) {
-        if (userRepository.findByUsername(request.getUsername()).isPresent())
-            throw new BadCredentialsException("User with username: " + request.getUsername() + " is already exist!");
-        User user = new User();
-        user.setUsername(request.getUsername());
-        user.setPassword(encoder.encode(request.getPassword()));
-        user.setEmail(request.getEmail());
-        user.setRole(request.getRole());
-        userRepository.save(user);
-        String token = jwtService.generateToken(user);
-        System.out.println(token);
-        return new UserRegisterResponse(token);
-    }
+
 
     @Override
     public AuthLoginResponse login(AuthLoginRequest authLoginRequest) {
