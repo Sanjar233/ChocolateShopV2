@@ -1,4 +1,4 @@
-package com.example.ChocolateShopV2.entities;
+package com.example.ChocolateShopV2.dto.transaction;
 
 import com.example.ChocolateShopV2.enums.TransactionType;
 import jakarta.persistence.*;
@@ -10,20 +10,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-@Entity
 @Getter
 @Setter
-@Table(name = "transaction_table")
-public class Transaction {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private LocalDateTime date;
+public class TransactionAddRequest {
     @Enumerated(EnumType.STRING)
     private TransactionType type;
     @ElementCollection
-    private List <Long> products;
+    private List<Long> products;
     @ElementCollection
-    private List <Integer> amount;
-    private int sum;
+    private List<Integer> amount;
 }
