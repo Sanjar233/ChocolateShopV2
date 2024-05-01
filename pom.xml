@@ -11,8 +11,8 @@
 	<groupId>com.example</groupId>
 	<artifactId>ChocolateShopV2</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>BrainDrain</name>
-	<description>codewars alike test project</description>
+	<name>ChocolateShopV2</name>
+	<description>Online chocolate shop</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
