@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,4 +24,7 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private ProductType type;
     private int price;
-    private int quantity;}
+    private int quantity;
+    @ManyToMany
+    Set<Purveyor>purveyors;
+}

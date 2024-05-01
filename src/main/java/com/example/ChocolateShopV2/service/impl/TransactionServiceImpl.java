@@ -3,6 +3,7 @@ package com.example.ChocolateShopV2.service.impl;
 import com.example.ChocolateShopV2.dto.transaction.TransactionAddRequest;
 import com.example.ChocolateShopV2.entities.Product;
 import com.example.ChocolateShopV2.entities.Transaction;
+import com.example.ChocolateShopV2.exception.BadRequestException;
 import com.example.ChocolateShopV2.repositories.ProductRepository;
 import com.example.ChocolateShopV2.repositories.TransactionRepository;
 import com.example.ChocolateShopV2.service.TransactionService;
@@ -19,6 +20,12 @@ public class TransactionServiceImpl implements TransactionService {
     private final ProductRepository productRepository;
     @Override
     public void add(TransactionAddRequest request) {
+        for(int j = 0 ; j < request.getProducts().size();j++){
+            Product product = productRepository.findById(request.getProducts().get(j)).orElseThrow();
+            int q = product.getQuantity() - request.getAmount().get(j);
+            if(q < 0)throw new BadRequestException("Not enough amount of products");
+            product.setQuantity(q);
+        }
         Transaction transaction = new Transaction();
         transaction.setDate(LocalDateTime.now());
         transaction.setType(request.getType());
