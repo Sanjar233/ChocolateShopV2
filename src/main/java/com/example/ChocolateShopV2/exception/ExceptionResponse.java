@@ -1,4 +1,4 @@
-package com.example.testProject.exception;
+package com.example.ChocolateShopV2.exception;
 
 import lombok.Getter;
 import lombok.Setter;

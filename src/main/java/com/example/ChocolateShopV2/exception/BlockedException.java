@@ -1,4 +1,4 @@
-package com.example.testProject.exception;
+package com.example.ChocolateShopV2.exception;
 
 public class BlockedException extends RuntimeException {
     public BlockedException() {
