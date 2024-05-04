@@ -20,6 +20,7 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private boolean isActive;
     private String name;
     @Enumerated(EnumType.STRING)
     private ProductType type;

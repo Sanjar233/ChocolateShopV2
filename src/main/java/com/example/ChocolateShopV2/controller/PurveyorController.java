@@ -1,7 +1,7 @@
 package com.example.ChocolateShopV2.controller;
 
 import com.example.ChocolateShopV2.dto.purveyor.PurveyorAddRequest;
-import com.example.ChocolateShopV2.dto.purveyor.PurveyorStatusRequest;
+import com.example.ChocolateShopV2.dto.StatusRequest;
 import com.example.ChocolateShopV2.service.PurveyorService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +15,7 @@ public class PurveyorController {
     public void add(@RequestBody PurveyorAddRequest request){
         purveyorService.add_purveyor(request);}
     @PostMapping("/setStatus")
-    public void setStatus(@RequestBody PurveyorStatusRequest request){
+    public void setStatus(@RequestBody StatusRequest request){
         purveyorService.set_status(request);
     }
 }
