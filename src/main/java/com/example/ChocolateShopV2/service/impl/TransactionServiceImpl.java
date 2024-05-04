@@ -2,8 +2,8 @@ package com.example.ChocolateShopV2.service.impl;
 
 import com.example.ChocolateShopV2.dto.transaction.TransactionAddRequest;
 import com.example.ChocolateShopV2.entities.Product;
-import com.example.ChocolateShopV2.entities.Purveyor;
 import com.example.ChocolateShopV2.entities.Transaction;
+import com.example.ChocolateShopV2.enums.TransactionType;
 import com.example.ChocolateShopV2.exception.BadRequestException;
 import com.example.ChocolateShopV2.repositories.ProductRepository;
 import com.example.ChocolateShopV2.repositories.PurveyorRepository;
@@ -13,8 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.*;
-
 @RequiredArgsConstructor
 @Service
 public class TransactionServiceImpl implements TransactionService {
@@ -25,7 +23,10 @@ public class TransactionServiceImpl implements TransactionService {
     public void add(TransactionAddRequest request) {
         for(int j = 0 ; j < request.getProducts().size();j++){
             Product product = productRepository.findById(request.getProducts().get(j)).orElseThrow();
-            int q = product.getQuantity() - request.getAmount().get(j);
+            int q = product.getQuantity() + request.getAmount().get(j);
+            if(request.getType() == TransactionType.SALE){
+                q = product.getQuantity() - request.getAmount().get(j);
+            }
             if(q < 0)throw new BadRequestException("Not enough amount of products");
             product.setQuantity(q);
         }

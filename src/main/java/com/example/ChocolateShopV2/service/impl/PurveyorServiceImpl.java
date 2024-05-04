@@ -2,8 +2,10 @@ package com.example.ChocolateShopV2.service.impl;
 
 import com.example.ChocolateShopV2.dto.purveyor.PurveyorAddRequest;
 import com.example.ChocolateShopV2.dto.purveyor.PurveyorSettingRequest;
+import com.example.ChocolateShopV2.dto.StatusRequest;
 import com.example.ChocolateShopV2.entities.Product;
 import com.example.ChocolateShopV2.entities.Purveyor;
+import com.example.ChocolateShopV2.exception.BadCredentialsException;
 import com.example.ChocolateShopV2.repositories.ProductRepository;
 import com.example.ChocolateShopV2.repositories.PurveyorRepository;
 import com.example.ChocolateShopV2.service.PurveyorService;
@@ -20,18 +22,37 @@ public class PurveyorServiceImpl implements PurveyorService {
     @Override
     public void add_purveyor(PurveyorAddRequest request){
         Purveyor purveyor = new Purveyor();
+        purveyor.setActive(true);
         purveyor.setName(request.getName());
         purveyor.setAddress(request.getAddress());
         purveyor.setPhone_number(request.getPhone_number());
         purveyorRepository.save(purveyor);
     }
-
+//    if(!product.isActive())throw new BadCredentialsException("Product is not active");
+//    if(!purveyor.isActive())throw new BadCredentialsException("Purveyor is not active");
     @Override
     public void set_product(PurveyorSettingRequest request) {
         Purveyor purveyor = purveyorRepository.findById(request.getProductId()).orElseThrow();
+        if(!purveyor.isActive())throw new BadCredentialsException("Purveyor is not active");
         Set<Product> s = purveyor.getProducts();
-        s.add(productRepository.findById(request.getProductId()).get());
+        Product product = productRepository.findById(request.getProductId()).get();
+        if(!product.isActive())throw new BadCredentialsException("Product is not active");
+        s.add(product);
         purveyor.setProducts(s);
+        purveyorRepository.save(purveyor);
+    }
+
+    @Override
+    public void set_status(StatusRequest request) {
+        Purveyor purveyor = purveyorRepository.findById(request.getId()).orElseThrow();
+        Set<Product> products =  purveyor.getProducts();
+        for(Product e : products){
+            Set<Purveyor> purveyors = e.getPurveyors();
+            purveyors.remove(purveyor);
+            e.setPurveyors(purveyors);
+            productRepository.save(e);
+        }
+        purveyor.setActive(request.isStatus());
         purveyorRepository.save(purveyor);
     }
 }

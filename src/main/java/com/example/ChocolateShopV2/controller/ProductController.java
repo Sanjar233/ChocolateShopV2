@@ -1,5 +1,6 @@
 package com.example.ChocolateShopV2.controller;
 
+import com.example.ChocolateShopV2.dto.StatusRequest;
 import com.example.ChocolateShopV2.dto.product.ProductAddRequest;
 import com.example.ChocolateShopV2.dto.product.ProductResponse;
 import com.example.ChocolateShopV2.dto.purveyor.PurveyorSettingRequest;
@@ -26,5 +27,13 @@ public class ProductController {
     @GetMapping("/show/{id}")
     public ProductResponse getById(@PathVariable Long id){
         return productService.getById(id);
+    }
+    @DeleteMapping("/deleteById/{id}")
+    public void deleteById(@PathVariable Long id) {
+        productService.deleteById(id);
+    }
+    @PostMapping("/setStatus")
+    public void setStatus(@RequestBody StatusRequest request){
+        productService.set_status(request);
     }
 }
