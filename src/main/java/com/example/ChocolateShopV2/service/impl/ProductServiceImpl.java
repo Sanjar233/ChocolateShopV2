@@ -1,15 +1,20 @@
 package com.example.ChocolateShopV2.service.impl;
 
 import com.example.ChocolateShopV2.dto.product.ProductAddRequest;
+import com.example.ChocolateShopV2.dto.product.ProductResponse;
 import com.example.ChocolateShopV2.dto.purveyor.PurveyorSettingRequest;
 import com.example.ChocolateShopV2.entities.Product;
 import com.example.ChocolateShopV2.entities.Purveyor;
+import com.example.ChocolateShopV2.exception.NotFoundException;
+import com.example.ChocolateShopV2.mappers.ProductMapper;
 import com.example.ChocolateShopV2.repositories.ProductRepository;
 import com.example.ChocolateShopV2.repositories.PurveyorRepository;
 import com.example.ChocolateShopV2.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.Set;
 
 @RequiredArgsConstructor
@@ -17,6 +22,7 @@ import java.util.Set;
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final PurveyorRepository purveyorRepository;
+    private final ProductMapper productMapper;
     @Override
     public void add(ProductAddRequest request){
         Product product = new Product();
@@ -36,4 +42,15 @@ public class ProductServiceImpl implements ProductService {
         productRepository.save(product);
     }
 
+    @Override
+    public ProductResponse getById(Long id) {
+        Optional<Product> product = productRepository.findById(id);
+        emptyChecker(product,id);
+        return productMapper.toDto(product.get());
+    }
+    private void emptyChecker(Optional<Product> product, Long id) {
+        if(product.isEmpty()) {
+            throw new NotFoundException("product with id: " + id + " not found", HttpStatus.NOT_FOUND);
+        }
+    }
 }

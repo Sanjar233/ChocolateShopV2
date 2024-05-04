@@ -1,14 +1,12 @@
 package com.example.ChocolateShopV2.controller;
 
 import com.example.ChocolateShopV2.dto.product.ProductAddRequest;
+import com.example.ChocolateShopV2.dto.product.ProductResponse;
 import com.example.ChocolateShopV2.dto.purveyor.PurveyorSettingRequest;
 import com.example.ChocolateShopV2.service.ProductService;
 import com.example.ChocolateShopV2.service.PurveyorService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
@@ -23,6 +21,10 @@ public class ProductController {
     @PostMapping("/set_purveyor")
     public void set_purveyor(@RequestBody PurveyorSettingRequest request){
         productService.set_purveyor(request);
-//        purveyorService.set_product(request);
+        purveyorService.set_product(request);
+    }
+    @GetMapping("/show/{id}")
+    public ProductResponse getById(@PathVariable Long id){
+        return productService.getById(id);
     }
 }

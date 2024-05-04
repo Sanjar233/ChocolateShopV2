@@ -6,9 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+
 
 @Entity
 @Getter
@@ -26,4 +25,6 @@ public class Transaction {
     @ElementCollection
     private List <Integer> amount;
     private int sum;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Purveyor purveyor;
 }

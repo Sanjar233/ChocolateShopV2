@@ -3,8 +3,7 @@ package com.example.ChocolateShopV2.entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Getter
@@ -20,4 +19,6 @@ public class Purveyor {
     private String phone_number;
     @ManyToMany(mappedBy = "purveyors")
     Set<Product> products;
+    @OneToMany(mappedBy = "purveyor")
+    private List<Transaction> transactions;
 }

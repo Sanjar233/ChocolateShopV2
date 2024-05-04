@@ -13,10 +13,8 @@ import java.util.List;
 @Getter
 @Setter
 public class TransactionAddRequest {
-    @Enumerated(EnumType.STRING)
     private TransactionType type;
-    @ElementCollection
     private List<Long> products;
-    @ElementCollection
     private List<Integer> amount;
+    private Long purveyorId;
 }
