@@ -14,6 +14,7 @@ public class Purveyor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private boolean isActive;
     private String name;
     private String address;
     private String phone_number;

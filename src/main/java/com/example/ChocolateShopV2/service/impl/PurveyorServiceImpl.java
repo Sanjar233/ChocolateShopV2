@@ -2,8 +2,10 @@ package com.example.ChocolateShopV2.service.impl;
 
 import com.example.ChocolateShopV2.dto.purveyor.PurveyorAddRequest;
 import com.example.ChocolateShopV2.dto.purveyor.PurveyorSettingRequest;
+import com.example.ChocolateShopV2.dto.purveyor.PurveyorStatusRequest;
 import com.example.ChocolateShopV2.entities.Product;
 import com.example.ChocolateShopV2.entities.Purveyor;
+import com.example.ChocolateShopV2.exception.BadCredentialsException;
 import com.example.ChocolateShopV2.repositories.ProductRepository;
 import com.example.ChocolateShopV2.repositories.PurveyorRepository;
 import com.example.ChocolateShopV2.service.PurveyorService;
@@ -20,6 +22,7 @@ public class PurveyorServiceImpl implements PurveyorService {
     @Override
     public void add_purveyor(PurveyorAddRequest request){
         Purveyor purveyor = new Purveyor();
+        purveyor.setActive(true);
         purveyor.setName(request.getName());
         purveyor.setAddress(request.getAddress());
         purveyor.setPhone_number(request.getPhone_number());
@@ -29,9 +32,17 @@ public class PurveyorServiceImpl implements PurveyorService {
     @Override
     public void set_product(PurveyorSettingRequest request) {
         Purveyor purveyor = purveyorRepository.findById(request.getProductId()).orElseThrow();
+        if(!purveyor.isActive())throw new BadCredentialsException("Purveyor is not active");
         Set<Product> s = purveyor.getProducts();
         s.add(productRepository.findById(request.getProductId()).get());
         purveyor.setProducts(s);
+        purveyorRepository.save(purveyor);
+    }
+
+    @Override
+    public void set_status(PurveyorStatusRequest request) {
+        Purveyor purveyor = purveyorRepository.findById(request.getId()).orElseThrow();
+        purveyor.setActive(request.isStatus());
         purveyorRepository.save(purveyor);
     }
 }

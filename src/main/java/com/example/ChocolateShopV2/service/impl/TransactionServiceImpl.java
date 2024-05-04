@@ -25,7 +25,10 @@ public class TransactionServiceImpl implements TransactionService {
     public void add(TransactionAddRequest request) {
         for(int j = 0 ; j < request.getProducts().size();j++){
             Product product = productRepository.findById(request.getProducts().get(j)).orElseThrow();
-            int q = product.getQuantity() - request.getAmount().get(j);
+            int q = product.getQuantity() + request.getAmount().get(j);
+            if(product.getType().toString().equals("SALE")){
+                q = product.getQuantity() - request.getAmount().get(j);
+            }
             if(q < 0)throw new BadRequestException("Not enough amount of products");
             product.setQuantity(q);
         }

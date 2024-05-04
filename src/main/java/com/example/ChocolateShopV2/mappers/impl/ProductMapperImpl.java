@@ -21,7 +21,7 @@ public class ProductMapperImpl implements ProductMapper {
         List<String>purveyors = new ArrayList<>();
         Set<Purveyor>purveyors2 = product.getPurveyors();
         for(Purveyor e : purveyors2){
-            purveyors.add(e.getPhone_number());
+            purveyors.add(e.getId().toString());
         }
         productResponse.setPurveyors(purveyors);
         return productResponse;
