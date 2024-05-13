@@ -11,8 +11,11 @@ import com.example.ChocolateShopV2.mappers.TransactionMapper;
 import com.example.ChocolateShopV2.repositories.ProductRepository;
 import com.example.ChocolateShopV2.repositories.PurveyorRepository;
 import com.example.ChocolateShopV2.repositories.TransactionRepository;
+import com.example.ChocolateShopV2.repositories.UserRepository;
 import com.example.ChocolateShopV2.service.TransactionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -25,6 +28,7 @@ public class TransactionServiceImpl implements TransactionService {
     private final ProductRepository productRepository;
     private final PurveyorRepository purveyorRepository;
     private final TransactionMapper transactionMapper;
+    private final UserRepository userRepository;
     @Override
     public void add(TransactionAddRequest request) {
         for(Long id : request.getProducts()){
@@ -41,7 +45,11 @@ public class TransactionServiceImpl implements TransactionService {
             if(q < 0)throw new BadRequestException("Not enough amount of products");
             product.setQuantity(q);
         }
+
         Transaction transaction = new Transaction();
+        String userInfo = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString().substring(7,12).replaceAll("[^0-9]", "");;
+        Long userId = (long) Integer.parseInt(userInfo);
+        transaction.setUser(userRepository.getById(userId));
         transaction.setDate(LocalDateTime.now());
         transaction.setType(request.getType());
         transaction.setProducts(request.getProducts());
@@ -59,6 +67,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public List<TransactionResponse> show_all() {
         return transactionMapper.toDtoS(transactionRepository.findAll());
+
     }
     @Override
     public TransactionResponse getById(Long id) {

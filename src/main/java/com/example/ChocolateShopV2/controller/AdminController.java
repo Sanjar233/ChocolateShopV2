@@ -21,5 +21,7 @@ public class AdminController {
     public void deleteUser(@PathVariable Long id){
         adminService.deleteUser(id);
     }
+    @PutMapping("deactivateUser/{id}")
+    public void deactivateUser(@PathVariable Long id){adminService.deactivateUser(id);}
 
 }

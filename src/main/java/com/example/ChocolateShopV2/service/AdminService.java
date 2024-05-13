@@ -7,4 +7,6 @@ public interface AdminService {
     UserRegisterResponse register(UserRegisterRequest userRegisterRequest);
 
     void deleteUser(Long id);
+
+    void deactivateUser(Long id);
 }
