@@ -21,4 +21,8 @@ public class TransactionController {
     public List<TransactionResponse> show_all(){
         return transactionService.show_all();
     }
+    @GetMapping("/show/{id}")
+    public TransactionResponse getById(@PathVariable Long id){
+        return transactionService.getById(id);
+    }
 }

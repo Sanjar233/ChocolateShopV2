@@ -9,4 +9,5 @@ public interface TransactionService {
     void add(TransactionAddRequest request);
 
     List<TransactionResponse> show_all();
+    TransactionResponse getById(Long id);
 }

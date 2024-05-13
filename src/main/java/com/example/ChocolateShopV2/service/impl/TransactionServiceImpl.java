@@ -60,4 +60,8 @@ public class TransactionServiceImpl implements TransactionService {
     public List<TransactionResponse> show_all() {
         return transactionMapper.toDtoS(transactionRepository.findAll());
     }
+    @Override
+    public TransactionResponse getById(Long id) {
+        return transactionMapper.toDto(transactionRepository.findById(id).get());
+    }
 }
