@@ -9,6 +9,7 @@ import java.util.List;
 @Setter
 public class ProductResponse {
     private Long id;
+    private boolean isActive;
     private String name;
     private ProductType type;
     private int price;

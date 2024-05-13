@@ -1,9 +1,7 @@
 package com.example.ChocolateShopV2.controller;
 
-import com.example.ChocolateShopV2.dto.user.UserRegisterResponse;
 import  com.example.ChocolateShopV2.dto.user.AuthLoginRequest;
 import  com.example.ChocolateShopV2.dto.user.AuthLoginResponse;
-import  com.example.ChocolateShopV2.dto.user.UserRegisterRequest;
 import  com.example.ChocolateShopV2.service.AuthService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;

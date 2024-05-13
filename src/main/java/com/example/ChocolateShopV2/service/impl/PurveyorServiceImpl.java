@@ -1,17 +1,20 @@
 package com.example.ChocolateShopV2.service.impl;
 
 import com.example.ChocolateShopV2.dto.purveyor.PurveyorAddRequest;
+import com.example.ChocolateShopV2.dto.purveyor.PurveyorResponse;
 import com.example.ChocolateShopV2.dto.purveyor.PurveyorSettingRequest;
 import com.example.ChocolateShopV2.dto.StatusRequest;
 import com.example.ChocolateShopV2.entities.Product;
 import com.example.ChocolateShopV2.entities.Purveyor;
 import com.example.ChocolateShopV2.exception.BadCredentialsException;
+import com.example.ChocolateShopV2.mappers.PurveyorMapper;
 import com.example.ChocolateShopV2.repositories.ProductRepository;
 import com.example.ChocolateShopV2.repositories.PurveyorRepository;
 import com.example.ChocolateShopV2.service.PurveyorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 @RequiredArgsConstructor
@@ -19,6 +22,7 @@ import java.util.Set;
 public class PurveyorServiceImpl implements PurveyorService {
     private final PurveyorRepository purveyorRepository;
     private final ProductRepository productRepository;
+    private final PurveyorMapper purveyorMapper;
     @Override
     public void add_purveyor(PurveyorAddRequest request){
         Purveyor purveyor = new Purveyor();
@@ -53,6 +57,26 @@ public class PurveyorServiceImpl implements PurveyorService {
             productRepository.save(e);
         }
         purveyor.setActive(request.isStatus());
+        purveyorRepository.save(purveyor);
+    }
+
+    @Override
+    public PurveyorResponse getById(Long id) {
+        return purveyorMapper.toDto(purveyorRepository.findById(id).get());
+    }
+
+    @Override
+    public List<PurveyorResponse> show_all() {
+        return purveyorMapper.toDtoS(purveyorRepository.findAll());
+    }
+
+    @Override
+    public void updateById(Long id, PurveyorAddRequest request) {
+        Purveyor purveyor = purveyorRepository.findById(id).orElseThrow();
+        if(!purveyor.isActive())throw new BadCredentialsException("Purveyor is not active");
+        purveyor.setName(request.getName());
+        purveyor.setAddress(request.getAddress());
+        purveyor.setPhone_number(request.getPhone_number());
         purveyorRepository.save(purveyor);
     }
 }

@@ -13,6 +13,8 @@ import com.example.ChocolateShopV2.repositories.PurveyorRepository;
 import com.example.ChocolateShopV2.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Set;
 
 @RequiredArgsConstructor
@@ -53,6 +55,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<ProductResponse> show_all() {
+        return productMapper.toDtoS(productRepository.findAll());
+    }
+
+    @Override
     public void deleteById(Long id) {
         productRepository.deleteById(id);
     }
@@ -68,6 +75,16 @@ public class ProductServiceImpl implements ProductService {
             purveyorRepository.save(e);
         }
         product.setActive(request.isStatus());
+        productRepository.save(product);
+    }
+
+    @Override
+    public void updateById(Long id, ProductAddRequest request) {
+        Product product = productRepository.findById(id).orElseThrow();
+        if(!product.isActive())throw new BadCredentialsException("Product is not active");
+        product.setName(request.getName());
+        product.setType(request.getType());
+        product.setPrice(request.getPrice());
         productRepository.save(product);
     }
 

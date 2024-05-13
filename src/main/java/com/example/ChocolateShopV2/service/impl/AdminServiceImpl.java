@@ -26,9 +26,21 @@ public class AdminServiceImpl implements AdminService {
         user.setPassword(encoder.encode(request.getPassword()));
         user.setEmail(request.getEmail());
         user.setRole(request.getRole());
+        user.setActive(true);
         userRepository.save(user);
         String token = jwtService.generateToken(user);
         System.out.println(token);
         return new UserRegisterResponse(token);
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
+    @Override
+    public void deactivateUser(Long id) {
+        User user = userRepository.findById(id).orElseThrow();
+        user.setActive(false);
+        userRepository.save(user);
     }
 }

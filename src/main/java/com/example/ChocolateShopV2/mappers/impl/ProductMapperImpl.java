@@ -14,6 +14,7 @@ public class ProductMapperImpl implements ProductMapper {
     public ProductResponse toDto(Product product) {
         ProductResponse productResponse = new ProductResponse();
         productResponse.setId(product.getId());
+        productResponse.setActive(product.isActive());
         productResponse.setName(product.getName());
         productResponse.setType(product.getType());
         productResponse.setPrice(product.getPrice());

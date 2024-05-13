@@ -27,4 +27,6 @@ public class Transaction {
     private int sum;
     @ManyToOne(fetch = FetchType.LAZY)
     private Purveyor purveyor;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
 }

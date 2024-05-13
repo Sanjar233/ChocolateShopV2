@@ -26,7 +26,7 @@ public class User  implements UserDetails {
     private String password;
     @Enumerated(value = EnumType.STRING)
     private Role role;
-
+    private boolean isActive;
 
 
 
@@ -55,4 +55,6 @@ public class User  implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+    @OneToMany(mappedBy = "user")
+    private List<Transaction> transactions;
 }
