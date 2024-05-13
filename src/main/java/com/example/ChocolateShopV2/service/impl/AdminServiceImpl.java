@@ -31,4 +31,9 @@ public class AdminServiceImpl implements AdminService {
         System.out.println(token);
         return new UserRegisterResponse(token);
     }
+
+    @Override
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
 }

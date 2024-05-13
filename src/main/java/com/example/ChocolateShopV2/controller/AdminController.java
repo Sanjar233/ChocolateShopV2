@@ -6,10 +6,7 @@ import com.example.ChocolateShopV2.service.AdminService;
 import com.example.ChocolateShopV2.service.AuthService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
@@ -20,4 +17,9 @@ public class AdminController {
     public ResponseEntity<UserRegisterResponse> register(@RequestBody UserRegisterRequest request){
         return ResponseEntity.ok(adminService.register(request));
     }
+    @DeleteMapping("/deleteUser/{id}")
+    public void deleteUser(@PathVariable Long id){
+        adminService.deleteUser(id);
+    }
+
 }
