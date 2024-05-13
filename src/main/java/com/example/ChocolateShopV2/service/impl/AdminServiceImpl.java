@@ -41,6 +41,6 @@ public class AdminServiceImpl implements AdminService {
     public void deactivateUser(Long id) {
         User user = userRepository.findById(id).orElseThrow();
         user.setActive(false);
-        userRepository.save(user)
+        userRepository.save(user);
     }
 }
